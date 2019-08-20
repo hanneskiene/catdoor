@@ -12,7 +12,7 @@ from picamera import PiCamera
 def mainApp():
     th = TelHandler()
     servo = ServoHandler()
-#    pir = PirHandler()
+    pir = PirHandler()
 
     lock = Lock()
 
@@ -51,7 +51,7 @@ def mainApp():
     th.setCallbackOpen(onOpen)
     th.startListening() #call if all callbacks are initialized
 
-#    pir.setCallback(onPir)
+    pir.setCallback(onPir)
     print("Loading Complete")
     while(True):
         time.sleep(2)
