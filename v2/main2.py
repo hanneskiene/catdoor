@@ -24,7 +24,9 @@ class MainController:
         self.camera.awb_mode = 'off'
         self.camera.awb_gains = g
         self.output_raw = picamera.array.PiRGBArray(self.camera)
+        self.camera.capture(self.output_raw, 'rgb')
         self.old_image = self.output_raw.array
+        self.output_raw.truncate(0)
 
         self.th_lock = Lock()
         self.cam_lock = Lock()
