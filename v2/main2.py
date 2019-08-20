@@ -73,11 +73,12 @@ class MainController:
         score_out = 0.0
         self.cam_lock.acquire()
         try:
-            self.output2 = self.output
-            with picamera.array.PiRGBArray(self.camera) as self.output:
-                self.camera.capture(self.output, 'rgb')
-                gray = cv2.cvtColor(output.array, cv2.COLOR_RGB2GRAY)
-                gray2 = cv2.cvtColor(output2.array, cv2.COLOR_RGB2GRAY)
+            self.output2 = self.output1
+            with picamera.array.PiRGBArray(self.camera) as output:
+                self.camera.capture(output, 'rgb')
+                self.output1 = output
+                gray = cv2.cvtColor(self.output.array, cv2.COLOR_RGB2GRAY)
+                gray2 = cv2.cvtColor(self.output2.array, cv2.COLOR_RGB2GRAY)
                 gray = cv2.GaussianBlur(gray, (21, 21), 0)
                 gray2 = cv2.GaussianBlur(gray2, (21, 21), 0)
                 # dif = gray2 - gray
