@@ -80,8 +80,9 @@ class MainController:
             self.cam_lock.release()
 
         if(score_out < 0.93):
-            self.sendPhoto()
             self.th.text("Movement")
+            self.sendPhoto()
+            
 
 
 while(True):
