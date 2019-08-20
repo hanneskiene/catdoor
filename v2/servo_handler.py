@@ -25,8 +25,7 @@ class ServoHandler:
         self.idle()
         #Thread(target=self.closeIn, args=[t]).start()
 
-    def closeIn(self, t):
-        time.sleep(t)
+    def close(self):
         print("Servo close")
         self.p.ChangeDutyCycle(2.5)
         self.idle()

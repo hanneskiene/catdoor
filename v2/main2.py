@@ -52,8 +52,8 @@ class MainController:
         self.servo.open()
 #        self.th.notifyOpen()
 
-    def onClose(self):
-        self.servo.closeIn(0)
+    def onClose(self, t):
+        self.servo.close()
 
     def run(self):
         while(True):
