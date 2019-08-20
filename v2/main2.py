@@ -16,7 +16,14 @@ class MainController:
         self.th = TelHandler()
         self.servo = ServoHandler()
         self.camera = PiCamera()
-        self.camera.awb_mode = 'cloudy'
+        self.camera.framerate = 1
+        time.sleep(2)
+        self.camera.shutter_speed = self.camera.exposure_speed
+        self.camera.exposure_mode = 'off'
+        g = self.camera.awb_gains
+        self.camera.awb_mode = 'off'
+        self.camera.awb_gains = g
+
         self.th_lock = Lock()
         self.cam_lock = Lock()
 
