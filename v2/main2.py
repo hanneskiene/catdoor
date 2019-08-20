@@ -15,8 +15,6 @@ class MainController:
     def __init__(self):
         self.th = TelHandler()
         self.servo = ServoHandler()
-        self.output1 = {}
-        self.output2 = {}
         self.camera = PiCamera()
         self.camera.framerate = 1
         time.sleep(2)
@@ -75,7 +73,6 @@ class MainController:
         score_out = 0.0
         self.cam_lock.acquire()
         try:
-            self.output2 = self.output1
             with picamera.array.PiRGBArray(self.camera) as output:
                 self.camera.capture(output, 'rgb')
                 self.output1 = output.array
@@ -90,6 +87,7 @@ class MainController:
                 (score, diff) = compare_ssim(gray, gray2, full=True)
                 # print("SSIM: {}".format(score))
                 score_out = score
+                self.output2 = self.output1
         finally:
             self.cam_lock.release()
             time.sleep(2)
