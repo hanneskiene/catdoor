@@ -16,8 +16,6 @@ class MainController:
         self.th = TelHandler()
         self.servo = ServoHandler()
         self.camera = PiCamera()
-        self.output1 = picamera.array.PiRGBArray(self.camera)
-        self.output2 = picamera.array.PiRGBArray(self.camera)
         self.camera.framerate = 1
         time.sleep(2)
         self.camera.shutter_speed = self.camera.exposure_speed
@@ -25,6 +23,8 @@ class MainController:
         g = self.camera.awb_gains
         self.camera.awb_mode = 'off'
         self.camera.awb_gains = g
+        self.output1 = picamera.array.PiRGBArray(self.camera)
+        self.output2 = picamera.array.PiRGBArray(self.camera)
 
         self.th_lock = Lock()
         self.cam_lock = Lock()
