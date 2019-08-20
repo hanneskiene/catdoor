@@ -23,6 +23,7 @@ class TelHandler:
         self.dispatcher = self.updater.dispatcher
         self.dispatcher.add_handler(CommandHandler('open', self.onCmdOpen))
         self.dispatcher.add_handler(CommandHandler('show', self.onCmdShow))
+        self.dispatcher.add_handler(CommandHandler('close', self.onCmdClose))
 
         self.bot = telegram.Bot(token=self.botToken)
 
@@ -44,6 +45,12 @@ class TelHandler:
 
     def setCallbackOpen(self, cb):
         self.callbackOpen = cb
+    
+    def onCmdClose(self, bot, update):
+        self.callbackClose(self)
+
+    def setCallbackClose(self, cb):
+        self.callbackClose = cb
 
     def sendPhoto(self, path):
         self.bot.sendPhoto(
@@ -51,7 +58,7 @@ class TelHandler:
 
     def sendCmdList(self):
         self.bot.send_message(chat_id=self.chat_id,
-                     text="For more images /show or \n /open to let the cat in")
+                     text="For more images /show or \n /open to let the cat in \n /close to close door")
     def notifyOpen(self):
         self.bot.send_message(chat_id=self.chat_id,
                      text="Opening")

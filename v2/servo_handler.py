@@ -23,7 +23,7 @@ class ServoHandler:
         print("Servo open")
         self.p.ChangeDutyCycle(9) #2.5 to 12.5
         self.idle()
-        Thread(target=self.closeIn, args=[t]).start()
+        #Thread(target=self.closeIn, args=[t]).start()
 
     def closeIn(self, t):
         time.sleep(t)

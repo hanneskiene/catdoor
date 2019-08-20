@@ -22,6 +22,7 @@ class MainController:
 
         self.th.setCallbackShow(self.onShow)
         self.th.setCallbackOpen(self.onOpen)
+        self.th.setCallbackClose(self.onClose)
         self.th.startListening()
         self.th.text("Started")
         self.sendPhoto()
@@ -51,6 +52,9 @@ class MainController:
         self.servo.open()
 #        self.th.notifyOpen()
 
+    def onClose(self):
+        self.servo.closeIn(0)
+
     def run(self):
         while(True):
             try:
@@ -78,6 +82,7 @@ class MainController:
                     score_out = score
         finally:
             self.cam_lock.release()
+            time.sleep(2)
 
         if(score_out < 0.93):
             self.th.text("Movement")
