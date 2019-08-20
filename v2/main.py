@@ -1,6 +1,6 @@
 from telegram_handler import TelHandler
 from servo_handler import ServoHandler
-#from pir_handler import PirHandler
+from pir_handler import PirHandler
 from threading import Lock
 import RPi.GPIO as gpio
 import cv2
