@@ -15,6 +15,8 @@ class MainController:
     def __init__(self):
         self.th = TelHandler()
         self.servo = ServoHandler()
+        self.output1 = {}
+        self.output2 = {}
         self.camera = PiCamera()
         self.camera.framerate = 1
         time.sleep(2)
