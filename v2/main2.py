@@ -73,6 +73,8 @@ class MainController:
                     self.camera.capture(output2, 'rgb')
                     gray = cv2.cvtColor(output.array, cv2.COLOR_RGB2GRAY)
                     gray2 = cv2.cvtColor(output2.array, cv2.COLOR_RGB2GRAY)
+                    gray = cv2.GaussianBlur(gray, (21, 21), 0)
+                    gray2 = cv2.GaussianBlur(gray2, (21, 21), 0)
                    # dif = gray2 - gray
                    # dif_abs = np.sum(dif)
                    # print("Difference:" + str(dif_abs))
