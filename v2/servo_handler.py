@@ -12,7 +12,7 @@ class ServoHandler:
         gpio.setmode(gpio.BCM)
         gpio.setup(self.pin, gpio.OUT)
         self.p = gpio.PWM(self.pin, 50)
-        self.p.start(10)
+        self.p.start(2.5)
         self.idle()
 
     def idle(self):
@@ -21,14 +21,14 @@ class ServoHandler:
 
     def open(self, t = 10):
         print("Servo open")
-        self.p.ChangeDutyCycle(4) #2.5 to 12.5
+        self.p.ChangeDutyCycle(9) #2.5 to 12.5
         self.idle()
         Thread(target=self.closeIn, args=[t]).start()
 
     def closeIn(self, t):
         time.sleep(t)
         print("Servo close")
-        self.p.ChangeDutyCycle(10)
+        self.p.ChangeDutyCycle(2.5)
         self.idle()
 
     def __del__(self):
