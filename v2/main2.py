@@ -73,22 +73,20 @@ class MainController:
         score_out = 0.0
         self.cam_lock.acquire()
         try:
-            with picamera.array.PiRGBArray(self.camera) as output:
-                self.camera.capture(output, 'rgb')
-                time.sleep(2)
-                with picamera.array.PiRGBArray(self.camera) as output2:
-                    self.camera.capture(output2, 'rgb')
-                    gray = cv2.cvtColor(output.array, cv2.COLOR_RGB2GRAY)
-                    gray2 = cv2.cvtColor(output2.array, cv2.COLOR_RGB2GRAY)
-                    gray = cv2.GaussianBlur(gray, (21, 21), 0)
-                    gray2 = cv2.GaussianBlur(gray2, (21, 21), 0)
-                   # dif = gray2 - gray
-                   # dif_abs = np.sum(dif)
-                   # print("Difference:" + str(dif_abs))
-                   # if(dif_abs > 58000000):
-                    (score, diff) = compare_ssim(gray, gray2, full=True)
-                   # print("SSIM: {}".format(score))
-                    score_out = score
+            self.output2 = self.output
+            with picamera.array.PiRGBArray(self.camera) as self.output:
+                self.camera.capture(self.output, 'rgb')
+                gray = cv2.cvtColor(output.array, cv2.COLOR_RGB2GRAY)
+                gray2 = cv2.cvtColor(output2.array, cv2.COLOR_RGB2GRAY)
+                gray = cv2.GaussianBlur(gray, (21, 21), 0)
+                gray2 = cv2.GaussianBlur(gray2, (21, 21), 0)
+                # dif = gray2 - gray
+                # dif_abs = np.sum(dif)
+                # print("Difference:" + str(dif_abs))
+                # if(dif_abs > 58000000):
+                (score, diff) = compare_ssim(gray, gray2, full=True)
+                # print("SSIM: {}".format(score))
+                score_out = score
         finally:
             self.cam_lock.release()
             time.sleep(2)
