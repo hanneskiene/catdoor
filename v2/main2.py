@@ -16,7 +16,7 @@ class MainController:
         self.th = TelHandler()
         self.servo = ServoHandler()
         self.camera = PiCamera()
-        self.camera.framerate = 1
+        self.camera.framerate = 10
         
         self.output_raw = picamera.array.PiRGBArray(self.camera)
 
@@ -39,8 +39,9 @@ class MainController:
         self.camera.exposure_mode = 'auto'
         self.camera.awb_mode = 'auto'
         time.sleep(2)
-        self.camera.shutter_speed = self.camera.exposure_speed
+        s = self.camera.exposure_speed
         self.camera.exposure_mode = 'off'
+        self.camera.shutter_speed = s
         g = self.camera.awb_gains
         self.camera.awb_mode = 'off'
         self.camera.awb_gains = g
