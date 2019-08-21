@@ -110,8 +110,8 @@ class MainController:
                 self.counter = 0
         finally:
             self.cam_lock.release()
-            if(score_out < 0.95):
-                self.th.text("Movement")
+            if(score_out < 0.92):
+                self.th.text("Movement"+score_out)
                 self.sendPhoto()
             time.sleep(1)
             
