@@ -101,21 +101,19 @@ class MainController:
             # print("SSIM: {}".format(score)
             score_out = score
             self.old_image = image
-        finally:
+            if(score_out < 0.93):
+                self.th.text("Movement")
+                self.sendPhoto()
             self.output_raw.truncate(0)
-            self.cam_lock.release()
             self.counter += 1
             if (self.counter > 120):
+                print("Calibrating\n")
                 self.calibrate()
                 self.counter = 0
+        finally:
+            self.cam_lock.release()
             time.sleep(2)
-
-        if(score_out < 0.93):
-            self.th.text("Movement")
-            self.sendPhoto()
             
-
-
 while(True):
     try:
         app = MainController()
