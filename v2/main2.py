@@ -98,7 +98,7 @@ class MainController:
             # print("Difference:" + str(dif_abs))
             # if(dif_abs > 58000000):
             (score, diff) = compare_ssim(gray, gray2, full=True)
-            # print("SSIM: {}".format(score))
+            # print("SSIM: {}".format(score)
             score_out = score
             self.old_image = image
         finally:
