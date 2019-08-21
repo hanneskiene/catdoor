@@ -36,6 +36,11 @@ class MainController:
         print("Ready")
     
     def calibrate(self):
+        self.camera.close()
+        self.camera = PiCamera()
+        self.camera.framerate = 10
+        self.output_raw = picamera.array.PiRGBArray(self.camera)
+
         self.camera.exposure_mode = 'auto'
         self.camera.awb_mode = 'auto'
         time.sleep(2)
@@ -104,7 +109,7 @@ class MainController:
             self.old_image = image
             self.output_raw.truncate(0)
             self.counter += 1
-            if (self.counter > 7):
+            if (self.counter > 6):
                 print("Calibrating\n")
                 self.calibrate()
                 self.counter = 0
