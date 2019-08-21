@@ -101,9 +101,6 @@ class MainController:
             # print("SSIM: {}".format(score)
             score_out = score
             self.old_image = image
-            if(score_out < 0.93):
-                self.th.text("Movement")
-                self.sendPhoto()
             self.output_raw.truncate(0)
             self.counter += 1
             if (self.counter > 120):
@@ -112,6 +109,9 @@ class MainController:
                 self.counter = 0
         finally:
             self.cam_lock.release()
+            if(score_out < 0.93):
+                self.th.text("Movement")
+                self.sendPhoto()
             time.sleep(2)
             
 while(True):
