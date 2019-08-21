@@ -104,7 +104,7 @@ class MainController:
             self.old_image = image
             self.output_raw.truncate(0)
             self.counter += 1
-            if (self.counter > 120):
+            if (self.counter > 7):
                 print("Calibrating\n")
                 self.calibrate()
                 self.counter = 0
