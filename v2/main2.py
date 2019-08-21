@@ -17,16 +17,12 @@ class MainController:
         self.servo = ServoHandler()
         self.camera = PiCamera()
         self.camera.framerate = 1
-        time.sleep(2)
-        self.camera.shutter_speed = self.camera.exposure_speed
-        self.camera.exposure_mode = 'off'
-        g = self.camera.awb_gains
-        self.camera.awb_mode = 'off'
-        self.camera.awb_gains = g
+        
         self.output_raw = picamera.array.PiRGBArray(self.camera)
-        self.camera.capture(self.output_raw, 'rgb')
-        self.old_image = self.output_raw.array
-        self.output_raw.truncate(0)
+
+        self.calibrate()
+
+        self.counter = 0
 
         self.th_lock = Lock()
         self.cam_lock = Lock()
@@ -38,6 +34,20 @@ class MainController:
         self.th.text("Started")
         self.sendPhoto()
         print("Ready")
+    
+    def calibrate(self):
+        self.camera.exposure_mode = 'auto'
+        self.camera.awb_mode = 'auto'
+        time.sleep(2)
+        self.camera.shutter_speed = self.camera.exposure_speed
+        self.camera.exposure_mode = 'off'
+        g = self.camera.awb_gains
+        self.camera.awb_mode = 'off'
+        self.camera.awb_gains = g
+
+        self.camera.capture(self.output_raw, 'rgb')
+        self.old_image = self.output_raw.array
+        self.output_raw.truncate(0)
 
     def capture(self):
         self.cam_lock.acquire()
@@ -94,6 +104,10 @@ class MainController:
         finally:
             self.output_raw.truncate(0)
             self.cam_lock.release()
+            self.counter += 1
+            if (self.counter > 120):
+                self.calibrate()
+                self.counter = 0
             time.sleep(2)
 
         if(score_out < 0.93):
