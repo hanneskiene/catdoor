@@ -36,10 +36,11 @@ class MainController:
         print("Ready")
     
     def calibrate(self):
-   #     self.camera.close()
-        #self.camera = PiCamera()
-        #self.camera.framerate = 10
-        #self.output_raw = picamera.array.PiRGBArray(self.camera)
+        self.camera.close()
+        time.sleep(1)
+        self.camera = PiCamera()
+        self.camera.framerate = 10
+        self.output_raw = picamera.array.PiRGBArray(self.camera)
 
         self.camera.exposure_mode = 'auto'
         self.camera.awb_mode = 'auto'
