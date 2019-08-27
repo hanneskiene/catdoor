@@ -10,7 +10,7 @@ class ServoHandler:
     def __init__(self):
         print("Servo Init")
         gpio.setmode(gpio.BCM)
-        gpio.setup(self.pin, gpio.OUT, pull_up_down=gpio.PUD_DOWN)
+        gpio.setup(self.pin, gpio.OUT)
         self.p = gpio.PWM(self.pin, 50)
         self.p.start(2.5)
         self.idle()
