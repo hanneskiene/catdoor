@@ -10,7 +10,7 @@ class PirHandler:
 
     def tick(self):
         dist = self.tof.get_distance()
-        print(dist)
+        #print(dist)
         if( abs(self.last-dist) > 25 ):
             self.callback()
         self.last = dist
