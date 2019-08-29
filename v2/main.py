@@ -29,7 +29,7 @@ def mainApp():
         cam.release()
 
     def onShow(th):
-        lock.acquire()
+        lock.acquire(false)
         try:
             print("main show")
             picam()
@@ -77,7 +77,7 @@ while(True):
         sys.exit()
     except Exception as e:
         print(e)
-        time.sleep(2)
+        time.sleep(10)
     finally:
         gpio.cleanup()
 
