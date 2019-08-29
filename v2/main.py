@@ -47,7 +47,7 @@ def mainApp():
         th.text('Movement detected')
         onShow(th)
 
-    def onClose(self, t):
+    def onClose(th):
         servo.close()
 
     th.setCallbackShow(onShow)

@@ -13,6 +13,7 @@ class ServoHandler:
         gpio.setup(self.pin, gpio.OUT)
         self.p = gpio.PWM(self.pin, 50)
         self.p.start(2.5)
+        time.sleep(2)
         self.idle()
 
     def idle(self):
