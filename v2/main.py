@@ -47,8 +47,12 @@ def mainApp():
         th.text('Movement detected')
         onShow(th)
 
+    def onClose(self, t):
+        servo.close()
+
     th.setCallbackShow(onShow)
     th.setCallbackOpen(onOpen)
+    th.setCallbackClose(onClose)
     th.startListening() #call if all callbacks are initialized
 
     pir.setCallback(onPir)
