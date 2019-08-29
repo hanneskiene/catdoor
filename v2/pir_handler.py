@@ -8,7 +8,8 @@ class PirHandler:
         self.tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 
     def tick(self):
-        if(self.tof.get_distance() < 320):
+        dist = self.tof.get_distance()
+        if( dist < 300 and dist > 100 ):
             self.callback()
 
     def setCallback(self, cb):
