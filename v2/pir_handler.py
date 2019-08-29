@@ -9,6 +9,7 @@ class PirHandler:
 
     def tick(self):
         dist = self.tof.get_distance()
+        print(dist)
         if( dist < 300 and dist > 100 ):
             self.callback()
 

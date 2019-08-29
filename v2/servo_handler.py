@@ -21,17 +21,17 @@ class ServoHandler:
 
     def open(self, t = 10):
         print("Servo open")
-        for i in range(7):
-            self.p.ChangeDutyCycle(2.5+i) #2.5 to 12.5
-            time.sleep(0.5)
+        for i in range(70):
+            self.p.ChangeDutyCycle(2.5+(i/10)) #2.5 to 12.5
+            time.sleep(0.05)
         self.idle()
         #Thread(target=self.closeIn, args=[t]).start()
 
     def close(self):
         print("Servo close")
-        for i in range(7):
-            self.p.ChangeDutyCycle(8.5-i) #2.5 to 12.5
-            time.sleep(0.5)
+        for i in range(70):
+            self.p.ChangeDutyCycle(8.5-(i/10)) #2.5 to 12.5
+            time.sleep(0.05)
         self.idle()
 
     def __del__(self):
