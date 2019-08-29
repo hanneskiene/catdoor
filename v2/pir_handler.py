@@ -6,6 +6,7 @@ class PirHandler:
         self.tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
         self.tof.open()
         self.tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
+        self.last = self.tof.get_distance()
 
     def tick(self):
         dist = self.tof.get_distance()
