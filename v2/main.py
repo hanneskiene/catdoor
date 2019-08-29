@@ -44,8 +44,14 @@ def mainApp():
         th.notifyOpen()
 
     def onPir():
-        th.text('Movement detected')
-        onShow(th)
+        lock.acquire()
+        try:
+            th.text('Movement detected')
+            picam()
+            th.sendPhoto('img.jpg')
+            th.sendCmdList()
+        finally:
+            lock.release()
 
     def onClose(th):
         servo.close()
@@ -59,7 +65,7 @@ def mainApp():
     print("Loading Complete")
     while(True):
         pir.tick()
-        time.sleep(2)
+        time.sleep(5)
 #
 # entry
 #   main loop supervisor
