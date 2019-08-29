@@ -44,7 +44,7 @@ def mainApp():
         th.notifyOpen()
 
     def onPir():
-        lock.acquire()
+        lock.acquire(False)
         try:
             th.text('Movement detected')
             picam()
