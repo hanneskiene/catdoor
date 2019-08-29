@@ -4,8 +4,8 @@ import time
 class PirHandler:
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
-        PIR_PIN = 2
-        GPIO.setup(PIR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        PIR_PIN = 17
+        GPIO.setup(PIR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.add_event_detect(PIR_PIN, GPIO.RISING, callback=self.MOTION)
         self.last_time = time.time()
 
