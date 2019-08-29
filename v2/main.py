@@ -29,7 +29,7 @@ def mainApp():
         cam.release()
 
     def onShow(th):
-        lock.acquire(false)
+        lock.acquire(False)
         try:
             print("main show")
             picam()
