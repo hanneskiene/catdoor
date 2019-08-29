@@ -1,26 +1,19 @@
-import RPi.GPIO as GPIO
 import time
+import VL53L0X
 
 class PirHandler:
     def __init__(self):
-        GPIO.setmode(GPIO.BCM)
-        PIR_PIN = 17
-        GPIO.setup(PIR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.add_event_detect(PIR_PIN, GPIO.RISING, callback=self.MOTION)
-        self.last_time = time.time()
+        self.tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
+        self.tof.open()
+        self.tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 
-    def MOTION(self, pin):
-        this_time = time.time()
-        elapsed = this_time - self.last_time
-        self.last_time = this_time
-        if elapsed < 15:
-            print(".")
-        else:
-            print("Motion")
+    def tick(self):
+        if(self.tof.get_distance() < 320)
             self.callback()
 
     def setCallback(self, cb):
         self.callback = cb
 
     def __del__(self):
-        GPIO.cleanup() 
+        self.tof.stop_ranging()
+        self.tof.close()

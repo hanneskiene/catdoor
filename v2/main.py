@@ -54,6 +54,7 @@ def mainApp():
     pir.setCallback(onPir)
     print("Loading Complete")
     while(True):
+        pir.tick()
         time.sleep(2)
 #
 # entry
