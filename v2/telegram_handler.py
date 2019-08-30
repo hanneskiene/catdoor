@@ -65,3 +65,6 @@ class TelHandler:
 
     def text(self, t):
         self.bot.send_message(chat_id=self.chat_id, text=t)
+
+    def __del__(self):
+        self.bot.send_message(chat_id=self.chat_id, text="ERROR")
