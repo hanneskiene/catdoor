@@ -3,14 +3,14 @@ from servo_handler import ServoHandler
 from pir_handler import PirHandler
 from threading import Lock
 import RPi.GPIO as GPIO
-import cv2
+#import cv2
 import time
 import sys
 from threading import Lock
 from picamera import PiCamera
-import picamera.array
-import numpy as np
-from skimage.measure import compare_ssim
+#import picamera.array
+#import numpy as np
+#from skimage.measure import compare_ssim
 
 class MainController:
     def __init__(self):
@@ -20,7 +20,7 @@ class MainController:
         self.camera = PiCamera()
         self.camera.framerate = 5
         
-        self.output_raw = picamera.array.PiRGBArray(self.camera)
+        #self.output_raw = picamera.array.PiRGBArray(self.camera)
 
         self.calibrate()
 
@@ -44,9 +44,9 @@ class MainController:
         #self.camera.framerate = 10
         #self.output_raw = picamera.array.PiRGBArray(self.camera)
 
-        self.camera.exposure_mode = 'auto'
+        self.camera.exposure_mode = 'sports'
         self.camera.awb_mode = 'auto'
-        #self.camera.iso = 0
+        self.camera.iso = 0
         #self.camera.shutter_speed = 0
         time.sleep(2)
         #s = self.camera.exposure_speed
