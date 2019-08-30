@@ -18,7 +18,7 @@ class MainController:
         self.servo = ServoHandler()
         self.tof = PirHandler()
         self.camera = PiCamera()
-        self.camera.framerate = 5
+        
         
         #self.output_raw = picamera.array.PiRGBArray(self.camera)
 
@@ -44,9 +44,10 @@ class MainController:
         #self.camera.framerate = 10
         #self.output_raw = picamera.array.PiRGBArray(self.camera)
 
-        self.camera.exposure_mode = 'sports'
+        self.camera.exposure_mode = 'night'
         self.camera.awb_mode = 'auto'
-        self.camera.iso = 0
+        #self.camera.iso = 0
+        self.camera.framerate = 1
         #self.camera.shutter_speed = 0
         time.sleep(2)
         #s = self.camera.exposure_speed
