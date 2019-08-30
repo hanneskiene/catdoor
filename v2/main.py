@@ -1,5 +1,6 @@
 from telegram_handler import TelHandler
 from servo_handler import ServoHandler
+from pir_handler import PirHandler
 from threading import Lock
 import RPi.GPIO as GPIO
 import cv2
@@ -15,8 +16,9 @@ class MainController:
     def __init__(self):
         self.th = TelHandler()
         self.servo = ServoHandler()
+        self.tof = PirHandler()
         self.camera = PiCamera()
-        self.camera.framerate = 10
+        self.camera.framerate = 5
         
         self.output_raw = picamera.array.PiRGBArray(self.camera)
 
@@ -44,19 +46,19 @@ class MainController:
 
         self.camera.exposure_mode = 'auto'
         self.camera.awb_mode = 'auto'
-        self.camera.iso = 0
-        self.camera.shutter_speed = 0
+        #self.camera.iso = 0
+        #self.camera.shutter_speed = 0
         time.sleep(2)
-        s = self.camera.exposure_speed
-        self.camera.exposure_mode = 'off'
-        self.camera.shutter_speed = s
-        g = self.camera.awb_gains
-        self.camera.awb_mode = 'off'
-        self.camera.awb_gains = g
+        #s = self.camera.exposure_speed
+        #self.camera.exposure_mode = 'off'
+        #self.camera.shutter_speed = s
+        #g = self.camera.awb_gains
+        #self.camera.awb_mode = 'off'
+        #self.camera.awb_gains = g
 
-        self.camera.capture(self.output_raw, 'rgb')
-        self.old_image = self.output_raw.array
-        self.output_raw.truncate(0)
+        #self.camera.capture(self.output_raw, 'rgb')
+        #self.old_image = self.output_raw.array
+        #self.output_raw.truncate(0)
 
     def capture(self):
         self.cam_lock.acquire()
@@ -87,51 +89,16 @@ class MainController:
 
     def run(self):
         while(True):
-            try:
-                self._run()
-            except KeyboardInterrupt:
-                break
-
-    def _run(self):
-        score_out = 0.0
-        self.cam_lock.acquire()
-        try:
-            self.camera.capture(self.output_raw, 'rgb')
-            image = self.output_raw.array
-            gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-            gray2 = cv2.cvtColor(self.old_image, cv2.COLOR_RGB2GRAY)
-            gray = cv2.GaussianBlur(gray, (21, 21), 0)
-            gray2 = cv2.GaussianBlur(gray2, (21, 21), 0)
-            # dif = gray2 - gray
-            # dif_abs = np.sum(dif)
-            # print("Difference:" + str(dif_abs))
-            # if(dif_abs > 58000000):
-            (score, diff) = compare_ssim(gray, gray2, full=True)
-            # print("SSIM: {}".format(score)
-            score_out = score
-            self.old_image = image
-            self.output_raw.truncate(0)
-            self.counter += 1
-            if (self.counter > 60):
-                print("Calibrating\n")
-                self.calibrate()
-                self.counter = 0
-        finally:
-            self.cam_lock.release()
-            print(score_out)
-            if(score_out < 0.92):
-                self.th.text("Movement")
+            if(self.tof.get_distance() < 260):
                 self.sendPhoto()
-            time.sleep(1)
+            time.sleep(3)
             
-while(True):
-    try:
-        app = MainController()
-        app.run()
-    except KeyboardInterrupt:
-        sys.exit()
-    except Exception as e:
-        print(e)
-        time.sleep(10)
-    finally:
-        GPIO.cleanup()
+try:
+    app = MainController()
+    app.run()
+except KeyboardInterrupt:
+    sys.exit()
+except Exception as e:
+    print(e)
+finally:
+    GPIO.cleanup()

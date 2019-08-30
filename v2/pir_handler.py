@@ -6,17 +6,14 @@ class PirHandler:
         self.tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
         self.tof.open()
         self.tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
-        self.last = self.tof.get_distance()
 
-    def tick(self):
-        dist = self.tof.get_distance()
-        #print(dist)
-        if( abs(self.last-dist) > 25 ):
-            self.callback()
-        self.last = dist
+    def get_distance(self):
+        dist = 0
+        for i in range(10):
+            dist = dist + self.tof.get_distance()
+        dist = dist / 10
+        return dist
 
-    def setCallback(self, cb):
-        self.callback = cb
 
     def __del__(self):
         self.tof.stop_ranging()
