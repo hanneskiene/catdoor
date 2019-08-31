@@ -38,7 +38,7 @@ class MainController:
         print("Ready")
     
     def calibrate(self):
-        self.camera.exposure_mode = 'night'
+        self.camera.exposure_mode = 'auto'
         self.camera.awb_mode = 'auto'
         self.camera.iso = 0
         self.camera.shutter_speed = 0
