@@ -38,29 +38,20 @@ class MainController:
         print("Ready")
     
     def calibrate(self):
-        #self.camera.close()
-        #time.sleep(1)
-        #self.camera = PiCamera()
-        #self.camera.framerate = 10
-        #self.output_raw = picamera.array.PiRGBArray(self.camera)
-
         self.camera.exposure_mode = 'night'
         self.camera.awb_mode = 'auto'
-        #self.camera.iso = 0
+        self.camera.iso = 0
+        self.camera.shutter_speed = 0
         self.camera.framerate = 1
-        #self.camera.shutter_speed = 0
         time.sleep(2)
-        #s = self.camera.exposure_speed
-        #self.camera.exposure_mode = 'off'
-        #self.camera.shutter_speed = s
-        #g = self.camera.awb_gains
-        #self.camera.awb_mode = 'off'
-        #self.camera.awb_gains = g
 
-        #self.camera.capture(self.output_raw, 'rgb')
-        #self.old_image = self.output_raw.array
-        #self.output_raw.truncate(0)
-
+        s = self.camera.exposure_speed
+        self.camera.exposure_mode = 'off'
+        self.camera.shutter_speed = s
+        g = self.camera.awb_gains
+        self.camera.awb_mode = 'off'
+        self.camera.awb_gains = g
+        
     def capture(self):
         self.cam_lock.acquire()
         try:
@@ -89,10 +80,16 @@ class MainController:
         self.servo.close()
 
     def run(self):
+        counter = 0
         while(True):
             if(self.tof.get_distance() < 260):
                 self.sendPhoto()
-            time.sleep(3)
+            if counter < 40:
+                time.sleep(3)
+                counter = counter + 1
+            else:
+                self.calibrate()
+                counter = 0
             
 try:
     app = MainController()
