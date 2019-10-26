@@ -42,15 +42,15 @@ class MainController:
         self.camera.awb_mode = 'auto'
         self.camera.iso = 0
         self.camera.shutter_speed = 0
-        self.camera.framerate = 1
+        self.camera.framerate = 3
         time.sleep(2)
-
         s = self.camera.exposure_speed
         self.camera.exposure_mode = 'off'
         self.camera.shutter_speed = s
         g = self.camera.awb_gains
         self.camera.awb_mode = 'off'
         self.camera.awb_gains = g
+
         
     def capture(self):
         self.cam_lock.acquire()
@@ -82,7 +82,9 @@ class MainController:
     def run(self):
         counter = 0
         while(True):
-            if(self.tof.get_distance() < 260):
+            dist = self.tof.get_distance()
+            #print(dist)
+            if (dist < 230 and dist > 40):
                 self.sendPhoto()
             if counter < 40:
                 time.sleep(3)
@@ -98,5 +100,6 @@ except KeyboardInterrupt:
     sys.exit()
 except Exception as e:
     print(e)
+    sys.exit()
 finally:
     GPIO.cleanup()
