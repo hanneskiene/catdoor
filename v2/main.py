@@ -15,10 +15,13 @@ from picamera import PiCamera
 class MainController:
     def __init__(self):
         self.th = TelHandler()
+        print("TEL")
         self.servo = ServoHandler()
+        print("SERV")
         self.tof = PirHandler()
+        print("TOF")
         self.camera = PiCamera()
-        
+        print("CAM")
         
         #self.output_raw = picamera.array.PiRGBArray(self.camera)
 
